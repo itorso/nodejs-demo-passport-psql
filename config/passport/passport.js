@@ -29,7 +29,13 @@ module.exports = (passport,user) => {
       return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
     };
 
-    //@todo validazione indirizzo eth
+    /**
+     * here you can put all your registration validation
+     */
+    if(password != req.body.password2){
+      return done(null, false, {message : 'Password doesn\'t match'} );
+    }
+
     User.findOne({where: {email:email}}).then((user) => {
 
       if(user){
